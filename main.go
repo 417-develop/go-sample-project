@@ -21,6 +21,7 @@ func main() {
 func initializeRoutes() {
 	router.GET("/foo", getFoo)
 	router.GET("/bar", getBar)
+	router.GET("/car/:id", getCar)
 }
 
 func getFoo(c *gin.Context) {
@@ -35,6 +36,17 @@ func getFoo(c *gin.Context) {
 
 func getBar(c *gin.Context) {
 	bytes, e := ioutil.ReadFile(`./static/json/get-bar.json`)
+	if e != nil {
+		log.Fatal(e)
+	}
+	data, e := simplejson.NewJson(bytes)
+	fmt.Println(data)
+	c.JSON(http.StatusOK, data)
+}
+
+func getCar(c *gin.Context) {
+	id := c.Param("id")
+	bytes, e := ioutil.ReadFile(`./static/json/car/get-car` + id + `.json`)
 	if e != nil {
 		log.Fatal(e)
 	}
