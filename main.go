@@ -1,16 +1,44 @@
 package main
 
 import (
-  "github.com/gin-gonic/gin"
-  "net/http"
-)
- func main() {
-   rooter := gin.Default()
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
 
-   rooter.GET("/ping", func(c *gin.Context) {
-   		c.JSON(http.StatusOK, gin.H{
-   			"message": "pong",
-   		})
-   	})
-   	rooter.Run(":8088") // listen and serve on 0.0.0.0:8080
-  }
+	simplejson "github.com/bitly/go-simplejson"
+	"github.com/gin-gonic/gin"
+)
+
+var router *gin.Engine
+
+func main() {
+	router = gin.Default()
+	initializeRoutes()
+	router.Run(":8088")
+}
+
+func initializeRoutes() {
+	router.GET("/foo", getFoo)
+	router.GET("/bar", getBar)
+}
+
+func getFoo(c *gin.Context) {
+	bytes, e := ioutil.ReadFile(`./static/json/get-foo.json`)
+	if e != nil {
+		log.Fatal(e)
+	}
+	data, e := simplejson.NewJson(bytes)
+	fmt.Println(data)
+	c.JSON(http.StatusOK, data)
+}
+
+func getBar(c *gin.Context) {
+	bytes, e := ioutil.ReadFile(`./static/json/get-bar.json`)
+	if e != nil {
+		log.Fatal(e)
+	}
+	data, e := simplejson.NewJson(bytes)
+	fmt.Println(data)
+	c.JSON(http.StatusOK, data)
+}
