@@ -2,7 +2,6 @@ package main
 
 import (
     "io/ioutil"
-    "log"
     "net/http"
 
     simplejson "github.com/bitly/go-simplejson"
@@ -28,7 +27,6 @@ func getFoo(c *gin.Context) {
         data, _ := simplejson.NewJson(bytes)
         c.JSON(http.StatusOK, data)
     } else {
-        log.Fatal(e)
         c.JSON(http.StatusInternalServerError, gin.H{"message": "Server Error"})
     }
 }
@@ -38,7 +36,6 @@ func getBar(c *gin.Context) {
         data, _ := simplejson.NewJson(bytes)
         c.JSON(http.StatusOK, data)
     } else {
-        log.Fatal(e)
         c.JSON(http.StatusInternalServerError, gin.H{"message": "Server Error"})
     }
 }
@@ -49,7 +46,6 @@ func getCar(c *gin.Context) {
         data, _ := simplejson.NewJson(bytes)
         c.JSON(http.StatusOK, data)
     } else {
-        log.Fatal(e)
         c.JSON(http.StatusInternalServerError, gin.H{"message": "Server Error"})
     }
 }
