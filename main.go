@@ -46,6 +46,6 @@ func getCar(c *gin.Context) {
         data, _ := simplejson.NewJson(bytes)
         c.JSON(http.StatusOK, data)
     } else {
-        c.JSON(http.StatusInternalServerError, gin.H{"message": "Server Error"})
+        c.JSON(http.StatusNotFound, gin.H{"message": "Resource is not found"})
     }
 }
