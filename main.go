@@ -8,18 +8,18 @@ import (
     "github.com/gin-gonic/gin"
 )
 
-var router *gin.Engine
+var r *gin.Engine
 
 func main() {
-    router = gin.Default()
-    initializeRoutes()
-    router.Run(":8088")
+    initializeRoutes().Run(":8088")
 }
 
-func initializeRoutes() {
-    router.GET("/foo", getFoo)
-    router.GET("/bar", getBar)
-    router.GET("/car/:id", getCar)
+func initializeRoutes() *gin.Engine {
+    r = gin.Default()
+    r.GET("/foo", getFoo)
+    r.GET("/bar", getBar)
+    r.GET("/car/:id", getCar)
+    return r
 }
 
 func getFoo(c *gin.Context) {
